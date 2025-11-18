@@ -109,11 +109,19 @@ plt.show()
 
 ## Output:
 <img width="1254" height="440" alt="image" src="https://github.com/user-attachments/assets/5dbef889-0214-4d84-affb-d16a7cfe6fcf" />
+
+
 <img width="551" height="426" alt="image" src="https://github.com/user-attachments/assets/ff7511b2-caa5-457c-9714-38bb65d0cecd" />
 
+
 <img width="479" height="385" alt="image" src="https://github.com/user-attachments/assets/451687e9-4735-4d99-a480-c5ce0dbc580c" />
+
+
 <img width="396" height="266" alt="image" src="https://github.com/user-attachments/assets/12ae4194-5cff-4454-bc3a-65b340d8ff9b" />
+
+
 <img width="387" height="170" alt="image" src="https://github.com/user-attachments/assets/32fc5b04-a41c-4bca-9c2d-8e6f34217621" />
+
 
 <img width="346" height="360" alt="image" src="https://github.com/user-attachments/assets/e33d9198-9831-43b5-8822-820c87e5662c" />
 
