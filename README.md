@@ -28,9 +28,95 @@ If the model is not performing well, experiment with different architectures, re
 Visualize the training/validation loss and accuracy over epochs to understand the training process. Visualize some misclassified examples to gain insights into potential improvements.
 
 # Program:
-Insert your code here
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Flatten
+from tensorflow.keras.utils import to_categorical
+from sklearn.metrics import confusion_matrix, classification_report
+from PIL import Image
+
+(X_train, y_train), (X_test, y_test) = mnist.load_data()
+
+X_train = X_train.astype('float32') / 255.0
+X_test = X_test.astype('float32') / 255.0
+y_train_categorical = to_categorical(y_train)
+y_test_categorical = to_categorical(y_test)
+
+X_train_split, X_val_split, y_train_split, y_val_split = train_test_split(X_train, y_train_categorical, test_size=0.1, random_state=42)
+
+model = Sequential([
+    Flatten(input_shape=(28, 28)),  # Adjust input shape
+    Dense(128, activation='relu'),
+    Dense(64, activation='relu'),
+    Dense(10, activation='softmax')
+])
+
+model.compile(optimizer='adam',
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+history = model.fit(X_train_split, y_train_split, epochs=10, batch_size=128, validation_data=(X_val_split, y_val_split))
+
+test_loss, test_acc = model.evaluate(X_test, y_test_categorical)
+print("Test Accuracy:", test_acc)
+
+y_pred = np.argmax(model.predict(X_test), axis=-1)
+
+conf_matrix = confusion_matrix(y_test, y_pred)
+class_report = classification_report(y_test, y_pred)
+
+print("Confusion Matrix:")
+print(conf_matrix)
+print("\nClassification Report:")
+print(class_report)
+
+plt.plot(history.history['accuracy'], label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.title('Training and Validation Accuracy')
+plt.legend()
+plt.show()
+
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Training and Validation Loss')
+plt.legend()
+plt.show()
+
+img_path = '/content/seven.png'  # Replace 'path_to_your_image.png' with the path to your image file
+img = Image.open(img_path)
+
+img_resized = img.resize((28, 28))
+img_grayscale = img_resized.convert('L')
+img_array = np.array(img_grayscale) / 255.0
+img_input = img_array.reshape(1, 28, 28)  # Reshape the image array to match the model's input shape
+
+predictions = model.predict(img_input)
+predicted_class = np.argmax(predictions)
+
+plt.imshow(img_array, cmap='gray')
+plt.title(f'Predicted Class: {predicted_class}')
+plt.show()
+```
+
 
 ## Output:
-Show your results here
+<img width="1254" height="440" alt="image" src="https://github.com/user-attachments/assets/5dbef889-0214-4d84-affb-d16a7cfe6fcf" />
+<img width="551" height="426" alt="image" src="https://github.com/user-attachments/assets/ff7511b2-caa5-457c-9714-38bb65d0cecd" />
 
+<img width="479" height="385" alt="image" src="https://github.com/user-attachments/assets/451687e9-4735-4d99-a480-c5ce0dbc580c" />
+<img width="396" height="266" alt="image" src="https://github.com/user-attachments/assets/12ae4194-5cff-4454-bc3a-65b340d8ff9b" />
+<img width="387" height="170" alt="image" src="https://github.com/user-attachments/assets/32fc5b04-a41c-4bca-9c2d-8e6f34217621" />
+
+<img width="346" height="360" alt="image" src="https://github.com/user-attachments/assets/e33d9198-9831-43b5-8822-820c87e5662c" />
+
+## RESULT: 
+Thus, a Multilayer Perceptron (MLP) to classify handwritten digits in python is build.
 
